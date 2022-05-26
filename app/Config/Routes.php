@@ -18,7 +18,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  */
 $routes->setDefaultNamespace('Myth\Auth\Controllers');
 $routes->setDefaultController('AuthController');
-$routes->setDefaultMethod('index');
+$routes->setDefaultMethod('login');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -32,11 +32,32 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-// $routes->get('/', 'AuthController::login', ['as' => 'login']);
-// $routes->post('/', 'AuthController::attemptLogin');
+$routes->get('create-db', function () {
+    $forge = \Config\Database::forge();
 
-$routes->group('dashboard', ['namespace' => 'App\Controllers'], static function ($routes) {
-    $routes->get('', 'Home::index');
+    if ($forge->createDatabase('db_tugasakhir_pbw2')) {
+        echo 'Database created!';
+
+        $migrate = \Config\Services::migrations();
+        $seeder = \Config\Database::seeder();
+
+        try {
+            $migrate->latest();
+            $seeder->call('MainSeeders');
+            echo 'Seed Success';
+        } catch (\Throwable $e) {
+            $e->getMessage();
+        }
+    }
+});
+
+$routes->get('/', 'AuthController::login', ['as' => 'login']);
+$routes->post('/', 'AuthController::attemptLogin');
+
+$routes->group('admin', ['namespace' => 'App\Controllers'], static function ($routes) {
+    $routes->get('', 'Admin::index');
+
+    $routes->resource('umkm', ['placeholder' => '(:num)']);
 });
 
 /*
