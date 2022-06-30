@@ -3586,7 +3586,7 @@ progress {
 
 .form-text {
     margin-top: .25rem;
-    font-size: .875em;
+    font-size: .820em;
     color: #58677d
 }
 
@@ -3786,7 +3786,7 @@ textarea.form-control-lg {
 .form-select {
     display: block;
     width: 100%;
-    padding: .5rem 1rem .5rem 1rem;
+    padding: .5rem 1.2rem .5rem 1rem;
     -moz-padding-start: calc(1rem - 3px);
     font-size: .875rem;
     font-weight: 400;
@@ -4307,10 +4307,10 @@ textarea.form-control-lg {
 }
 
 .invalid-feedback {
-    display: none;
+    /* display: none; */
     width: 100%;
     margin-top: .25rem;
-    font-size: .795em;
+    font-size: .820em;
     color: #e11d48;
     text-align: right
 }

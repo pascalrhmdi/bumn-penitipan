@@ -3,6 +3,10 @@
 <?= $this->section('main') ?>
 
 <div class="row">
+  <div class="my-2">
+    <h3 class="mb-1">Dasbor</h4>
+    <p class="mb-2">Rekapan data Sistem Penitipan Barang Rumah BUMN Denpasar, Bali.</p>
+  </div>
   <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border-0 shadow">
       <div class="card-body">
@@ -15,14 +19,14 @@
               </svg>
             </div>
             <div class="d-sm-none">
-              <h2 class="h5">UMKM</h2>
-              <h3 class="fw-extrabold mb-0">345,678</h3>
+              <a class="h5 stretched-link" href="<?= route_to("App\Controllers\Umkm::index"); ?>">UMKM</a>
+              <h3 class="fw-extrabold mb-0"><?= $umkms; ?></h3>
             </div>
           </div>
           <div class="col-12 col-xl-7 px-xl-0">
             <div class="d-none d-sm-block">
-              <h2 class="h6 text-gray-400 mb-0">UMKM</h2>
-              <h3 class="fw-extrabold mb-0">345k</h3>
+              <a class="h6 text-gray-400 mb-0 stretched-link" href="<?= route_to("App\Controllers\Umkm::index"); ?>">UMKM</a>
+              <h3 class="fw-extrabold mb-0 "><?= $umkms; ?></h3>
             </div>
           </div>
         </div>
@@ -40,47 +44,16 @@
               </svg>
             </div>
             <div class="d-sm-none">
-              <h2 class="fw-extrabold h5">Barang</h2>
-              <h3 class="mb-0">43.594</h3>
+              <a class="fw-extrabold h5 stretched-link" href="<?= route_to("App\Controllers\Item::index"); ?>">Barang Disetorkan</a>
+              <h3 class="mb-0"><?= $items; ?></h3>
             </div>
           </div>
           <div class="col-12 col-xl-7 px-xl-0">
             <div class="d-none d-sm-block">
-              <h2 class="h6 text-gray-400 mb-0">Barang</h2>
-              <h3 class="fw-extrabold mb-0">43.594</h3>
+              <a class="h6 text-gray-400 mb-0 stretched-link" href="<?= route_to("App\Controllers\Item::index"); ?>">Barang Disetorkan</a>
+              <h3 class="fw-extrabold mb-0"><?= $items; ?></h3>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12">
-    <div class="col-12 px-0 mb-4">
-      <div class="card border-0 shadow">
-        <div class="card-header d-flex flex-row align-items-center flex-0 border-bottom">
-          <div class="d-block">
-            <div class="h6 fw-normal text-gray mb-2">Total orders</div>
-            <h2 class="h3 fw-extrabold">452</h2>
-            <div class="small mt-2">
-              <span class="fas fa-angle-up text-success"></span>
-              <span class="text-success fw-bold">18.2%</span>
-            </div>
-          </div>
-          <div class="d-block ms-auto">
-            <div class="d-flex align-items-center text-end mb-2">
-              <span class="dot rounded-circle bg-gray-800 me-2"></span>
-              <span class="fw-normal small">July</span>
-            </div>
-            <div class="d-flex align-items-center text-end">
-              <span class="dot rounded-circle bg-secondary me-2"></span>
-              <span class="fw-normal small">August</span>
-            </div>
-          </div>
-        </div>
-        <div class="card-body p-2">
-          <div class="ct-chart-ranking ct-golden-section ct-series-a"></div>
         </div>
       </div>
     </div>

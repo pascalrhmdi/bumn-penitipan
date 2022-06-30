@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -16,9 +18,9 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * Router Setup
  * --------------------------------------------------------------------
  */
-$routes->setDefaultNamespace('Myth\Auth\Controllers');
-$routes->setDefaultController('AuthController');
-$routes->setDefaultMethod('login');
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Admin');
+$routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -32,32 +34,30 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('create-db', function () {
-    $forge = \Config\Database::forge();
-
-    if ($forge->createDatabase('db_tugasakhir_pbw2')) {
-        echo 'Database created!';
-
+$routes->get('create-table', function () {
         $migrate = \Config\Services::migrations();
-        $seeder = \Config\Database::seeder();
-
+        
         try {
             $migrate->latest();
-            $seeder->call('MainSeeders');
+            $migrate->setNamespace('Myth\Auth')->latest();
+            $seeder = \Config\Database::seeder();
+            $seeder->call('MainSeeder');
             echo 'Seed Success';
         } catch (\Throwable $e) {
             $e->getMessage();
+        } finally {
+            echo "Done";
         }
-    }
 });
 
-$routes->get('/', 'AuthController::login', ['as' => 'login']);
-$routes->post('/', 'AuthController::attemptLogin');
+// whatsapp://send?text=Hello%2C%20World!
 
-$routes->group('admin', ['namespace' => 'App\Controllers'], static function ($routes) {
-    $routes->get('', 'Admin::index');
+$routes->addRedirect('/', 'admin');
 
+$routes->group('admin', ['filter' => 'login'], static function ($routes) {
+    $routes->get('/', 'Admin::index');
     $routes->resource('umkm', ['placeholder' => '(:num)']);
+    $routes->resource('item', ['placeholder' => '(:num)']);
 });
 
 /*

@@ -9,7 +9,7 @@ class CreateUmkm extends Migration
     public function up()
     {
         $this->forge->addField([
-            'umkm_id'          => [
+            'id'          => [
                 'type'           => 'INT',
                 'unsigned'       => true,
                 'auto_increment' => true,
@@ -18,13 +18,19 @@ class CreateUmkm extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => 100,
             ],
-            'telepon_umkm' => [
+            'nomor_telepon' => [
                 'type' => 'VARCHAR',
                 'constraint' => 13,
             ],
+            'alamat' => [
+                'type' => 'text',
+            ],
+            'created_at'       => ['type' => 'datetime', 'null' => true],
+            'updated_at'       => ['type' => 'datetime', 'null' => true],
+            'deleted_at'       => ['type' => 'datetime', 'null' => true],
         ]);
         
-        $this->forge->addPrimaryKey('umkm_id');
+        $this->forge->addPrimaryKey('id');
         $this->forge->createTable('umkms');
     }
     

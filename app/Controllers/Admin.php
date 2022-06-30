@@ -8,6 +8,15 @@ class Admin extends BaseController
 {
     public function index()
     {
-        return view('dashboard');
+        $umkmModel = model("UmkmModel");
+        $itemModel = model("ItemModel");
+
+        $data = array(
+            'title' => "Dashboard",
+            'umkms' => $umkmModel->countAll(),
+            'items' => $itemModel->countAll(),
+        );
+
+        return view('dashboard', $data);
     }
 }

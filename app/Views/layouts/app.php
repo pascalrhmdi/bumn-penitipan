@@ -8,7 +8,7 @@
     <meta name="author" content="Muhammad Pascal Rahmadi">
     <link rel="icon" href="<?= base_url('images/favicon/favicon.ico'); ?>">
 
-    <title>SIPIRANG</title>
+    <title><?= $title; ?> | SIPIRANG</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="120x120" href="<?= base_url('images/favicon/apple-touch-icon.png'); ?>">
@@ -22,33 +22,36 @@
     <!-- Sweet Alert -->
     <link type="text/css" href="<?= base_url('css/sweetalert2.min.css'); ?>" rel="stylesheet">
 
+    <!-- Choices CSS -->
+    <link rel="stylesheet" href="<?= base_url("ChoicesJS/public/assets/styles/choices.min.css"); ?>" />
+
     <!-- Volt CSS OK-->
     <link rel="stylesheet" href="<?= base_url('css/volt.css'); ?>">
 
     <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="<?= base_url('DataTables/datatables.min.css'); ?>"/>
+    <link rel="stylesheet" type="text/css" href="<?= base_url('DataTables/datatables.min.css'); ?>" />
 
     <?= $this->renderSection('pageStyles') ?>
-</head> 
+</head>
 
 <body>
 
     <?= view('Myth\Auth\Views\_navbar') ?>
-    
-    <main role="main" class="<?php if(logged_in()) : ?> content <?php else : ?> p-2 <?php endif ?> ">
 
-        <?php if(logged_in()): ?>
+    <main role="main" class="<?php if (logged_in()) : ?> content <?php else : ?> p-2 <?php endif ?> ">
+
+        <?php if (logged_in()) : ?>
             <?= view('layouts/admin_header'); ?>
         <?php endif ?>
 
         <?= $this->renderSection('main') ?>
-        
+
         <?= view('Myth\Auth\Views\_footer') ?>
     </main>
-    
+
 
     <!-- DataTables JS -->
-    <script type="text/javascript" src="<?= base_url('DataTables/datatables.min.js'); ?>"></script>
+    <script type="text/javascript" charset="utf8" src="<?= base_url('DataTables/datatables.min.js'); ?>"></script>
 
     <!-- Sweet Alerts 2 -->
     <script src="<?= base_url('js/sweetalert2/sweetalert2.all.min.js'); ?>"></script>
@@ -57,14 +60,14 @@
     <script src="<?= base_url('js/popperjs/umd/popper.min.js'); ?>"></script>
     <script src="<?= base_url('js/bootstrap/bootstrap.min.js'); ?>"></script>
 
-    <!-- Vanilla JS Datepicker OK-->
-    <script src="<?= base_url('js/vanillajs-datepicker/datepicker.min.js'); ?>"></script>
-
     <!-- Simplebar -->
     <script src="<?= base_url('js/simplebar/simplebar.min.js'); ?>"></script>
 
     <!-- Volt JS OK-->
     <script src="<?= base_url('js/volt.js'); ?>"></script>
+
+    <!-- Choices JS -->
+    <script src="<?= base_url("ChoicesJS/public/assets/scripts/choices.min.js"); ?>"></script>
 
     <?= $this->renderSection('pageScripts') ?>
 </body>

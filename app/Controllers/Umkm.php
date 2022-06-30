@@ -6,6 +6,16 @@ use CodeIgniter\RESTful\ResourceController;
 
 class Umkm extends ResourceController
 {
+
+    protected $modelName = 'App\Models\UmkmModel';
+    protected $format = 'json';
+    private \App\Entities\Umkm $entity;
+
+    public function __construct()
+    {
+        $this->entity = new \App\Entities\Umkm();
+    }
+
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -13,7 +23,13 @@ class Umkm extends ResourceController
      */
     public function index()
     {
-        return view('umkm/index');
+
+        $data = [
+            'title' => 'UMKM',
+            'umkms' => $this->model->findAll(),
+        ];
+
+        return view('umkm/index', $data);
     }
 
     /**
@@ -23,7 +39,15 @@ class Umkm extends ResourceController
      */
     public function show($id = null)
     {
-        return view('umkm/show');
+        $itemModel = model("ItemModel");
+
+        $data = [
+            'title' => "Lihat",
+            'umkm' => $this->model->find($id),
+            'items' => $itemModel->where("id_umkm", $id)->findAll(),
+        ];
+
+        return view('umkm/show', $data);
     }
 
     /**
@@ -33,7 +57,11 @@ class Umkm extends ResourceController
      */
     public function new()
     {
-        return view('umkm/new');
+        $data = [
+            'title' => "Tambah Data",
+        ];
+
+        return view('umkm/new', $data);
     }
 
     /**
@@ -43,7 +71,15 @@ class Umkm extends ResourceController
      */
     public function create()
     {
-        //
+        if (!$this->validate($this->model->validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $this->entity->fill($this->request->getPost());
+
+        $this->model->save($this->entity);
+
+        return redirect('admin/umkm');
     }
 
     /**
@@ -53,7 +89,12 @@ class Umkm extends ResourceController
      */
     public function edit($id = null)
     {
-        //
+        $data = [
+            'title' => 'Edit UMKM',
+            'data' => $this->model->find($id),
+        ];
+
+        return view('umkm/edit', $data);
     }
 
     /**
@@ -63,7 +104,20 @@ class Umkm extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        $data = [
+            'id' => $id,
+            'nama_umkm' => $this->request->getPost('nama_umkm'),
+            'nomor_telepon' => $this->request->getPost('nomor_telepon'),
+            'alamat' => $this->request->getPost('alamat'),
+        ];
+
+        $this->entity->fill($data);
+
+        // dd($this->entity);
+
+        $this->model->save($this->entity);
+
+        return redirect('admin/umkm');
     }
 
     /**
@@ -73,6 +127,8 @@ class Umkm extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $this->model->delete($id);
+
+        return redirect('admin/umkm');
     }
 }

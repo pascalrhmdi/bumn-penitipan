@@ -9,7 +9,7 @@ class CreateItems extends Migration
     public function up()
     {
         $this->forge->addField([
-            'item_id'          => [
+            'id'          => [
                 'type'           => 'INT',
                 'unsigned'       => true,
                 'auto_increment' => true,
@@ -26,6 +26,14 @@ class CreateItems extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100,
             ],
+            'harga_rb' => [
+                'type'          => 'INT',
+                'unsigned'      => true,
+            ],
+            'harga_jual' => [
+                'type'          => 'INT',
+                'unsigned'      => true,
+            ],
             'nama_pemberi' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
@@ -34,25 +42,18 @@ class CreateItems extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 13,
             ],
-            'nama_produk' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ],
-            'harga_rb' => [
-                'type' => 'INT',
-            ],
-            'harga_jual' => [
-                'type' => 'INT',
-            ],
-            'tanggal_masuk' => [
-                'type' => 'DATE',
-            ],
+            'expired_at'       => ['type' => 'datetime'],
+            'created_at'       => ['type' => 'datetime', 'null' => true],
+            'updated_at'       => ['type' => 'datetime', 'null' => true],
+            'deleted_at'       => ['type' => 'datetime', 'null' => true],
         ]);
-        
-        $this->forge->addPrimaryKey('item_id');
+
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_umkm', 'umkms', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('items');
     }
-    
+
     public function down()
     {
         $this->forge->dropTable('items');
