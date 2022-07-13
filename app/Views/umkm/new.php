@@ -26,7 +26,7 @@
             <label for="nomor_telepon">Nomor Telepon<span class="text-danger">*</span></label>
             <div class="input-group">
               <span class="input-group-text" id="nomor_telepon">+62</span>
-              <input type="number" class="form-control <?= session('errors.nomor_telepon') ? "is-invalid" : null; ?>" id="nomor_telepon" placeholder="8988xxxxxxx" name="nomor_telepon" value="<?= old('nomor_telepon') ?>">
+              <input type="tel" class="form-control <?= session('errors.nomor_telepon') ? "is-invalid" : null; ?>" id="nomor_telepon" placeholder="8988xxxxxxx" name="nomor_telepon" value="<?= old('nomor_telepon') ?>">
             </div>
             <?php if (!session('errors.nomor_telepon')) : ?>
               <small id="nomor_telepon_help" class="form-text text-muted text-end">Nomor Whatsapp lebih baik. Isi tanpa awalan 08 dan 62.</small>
@@ -53,5 +53,16 @@
     </div>
   </div>
 </div>
+
+<?= $this->section('pageStyles'); ?>
+<script>
+  const nomor_telepon = document.getElementById('nomor_telepon');
+    nomor_telepon.addEventListener('keyup', function(e)
+    {
+      const splittedValue = this.value.split('-').join('')
+      nomor_telepon.value = splittedValue.replace(/(\d)(\d)(\d)(\d)(?!$)/g, '$1$2$3$4-')
+    });
+</script>
+<?= $this->endSection(); ?>
 
 <?= $this->endSection(); ?>

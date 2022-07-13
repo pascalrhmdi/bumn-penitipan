@@ -51,10 +51,10 @@
               <label for="telepon_pemberi">Nomor Telepon Pemberi<span class="text-danger">*</span></label>
               <div class="input-group">
                 <span class="input-group-text" id="nomor_telepon">+62</span>
-                <input type="number" class="form-control <?= session('errors.telepon_pemberi') ? "is-invalid" : null; ?>" placeholder="8988xxxxxxx" id="telepon_pemberi" name="telepon_pemberi" value="<?= old('telepon_pemberi') ?? $item->getTeleponPemberi(true); ?>">
+                <input type="text" class="form-control <?= session('errors.telepon_pemberi') ? "is-invalid" : null; ?>" placeholder="8988xxxxxxx" id="telepon_pemberi" name="telepon_pemberi" value="<?= old('telepon_pemberi') ?? $item->getTeleponPemberi(true); ?>">
               </div>
               <?php if (!session('errors.telepon_pemberi')) : ?>
-                <small id="telepon_pemberi_help" class="form-text text-muted text-end">Nomor Whatsapp lebih baik. Isi tanpa awalan 08 dan 62.</small>
+                <small id="telepon_pemberi_help" class="form-text text-muted text-end">Nomor Whatsapp lebih baik. Isi tanpa awalan 0 atau 62.</small>
               <?php else : ?>
                 <small class="invalid-feedback">
                   <?= session('errors.telepon_pemberi') ?>
@@ -76,8 +76,8 @@
               <?php endif ?>
             </div>
             <div class="form-group mb-2 d-flex flex-column">
-              <label for="harga_jual">Harga Jual<span class="text-danger">*</span></label>
-              <input type="number" class="form-control <?= session('errors.harga_jual') ? "is-invalid" : null; ?>" id="harga_jual" name="harga_jual" value="<?= old('harga_jual') ?? $item->harga_jual; ?>">
+              <label for="harga_jual">Harga Jual (Rp)<span class="text-danger">*</span></label>
+              <input type="text" class="form-control <?= session('errors.harga_jual') ? "is-invalid" : null; ?>" id="harga_jual" name="harga_jual" value="<?= old('harga_jual') ?? $item->harga_jual; ?>"  placeholder="Rpx.xxx">
               <?php if (!session('errors.harga_jual')) : ?>
                 <small id="harga_jual_help" class="form-text text-muted text-end">Harga barang.</small>
               <?php else : ?>
@@ -87,8 +87,8 @@
               <?php endif ?>
             </div>
             <div class="form-group mb-2 d-flex flex-column">
-              <label for="harga_rb">Harga Jual Rumah BUMN<span class="text-danger">*</span></label>
-              <input type="number" class="form-control <?= session('errors.harga_rb') ? "is-invalid" : null; ?>" id="harga_rb" name="harga_rb" value="<?= old('harga_rb') ?? $item->harga_rb; ?>">
+              <label for="harga_rb">Harga Jual Rumah BUMN (Rp)<span class="text-danger">*</span></label>
+              <input type="text" class="form-control <?= session('errors.harga_rb') ? "is-invalid" : null; ?>" id="harga_rb" name="harga_rb" value="<?= old('harga_rb') ?? $item->harga_rb; ?>"  placeholder="Rpx.xxx">
               <?php if (!session('errors.harga_rb')) : ?>
                 <small id="harga_rb_help" class="form-text text-muted text-end">Harga jual barang di Rumah BUMN.</small>
               <?php else : ?>
@@ -116,6 +116,7 @@
               <?php endif ?>
             </div>
           </div>
+          <a class="btn btn-outline-secondary" href="<?= site_url("admin/item"); ?>" type="button">Kembali</a>
           <button class="btn btn-primary " type="submit" title="submit">Submit</button>
         </form>
       </div>
@@ -125,10 +126,46 @@
 
 <?= $this->section('pageScripts'); ?>
 <script>
-  var selectStateInputEl = d.querySelector('#id_umkm');
+  const selectStateInputEl = d.querySelector('#id_umkm');
   if (selectStateInputEl) {
     const choices = new Choices(selectStateInputEl);
   }
+
+  const harga_jual = document.getElementById('harga_jual');
+    harga_jual.addEventListener('keyup', function(e)
+    {
+        harga_jual.value = formatRupiah(this.value, "Rp");
+    });
+
+  const harga_rb = document.getElementById('harga_rb');
+    harga_rb.addEventListener('keyup', function(e)
+    {
+        harga_rb.value = formatRupiah(this.value, "Rp");
+    });
+
+  function formatRupiah(angka, prefix)
+    {
+        let number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split    = number_string.split(','),
+            sisa     = split[0].length % 3,
+            rupiah     = split[0].substr(0, sisa),
+            ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+            
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp.' + rupiah : '');
+    }
+
+    const telepon_pemberi = document.getElementById('telepon_pemberi');
+    telepon_pemberi.addEventListener('keyup', function(e)
+    {
+      const splittedValue = this.value.split('-').join('')
+      telepon_pemberi.value = splittedValue.replace(/(\d)(\d)(\d)(\d)(?!$)/g, '$1$2$3$4-')
+    });
 </script>
 <?= $this->endSection(); ?>
 

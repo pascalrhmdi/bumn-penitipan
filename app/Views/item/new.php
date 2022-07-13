@@ -46,10 +46,10 @@
               <label for="telepon_pemberi">Nomor Telepon Pemberi<span class="text-danger">*</span></label>
               <div class="input-group">
                 <span class="input-group-text" id="nomor_telepon">+62</span>
-                <input type="number" class="form-control <?= session('errors.telepon_pemberi') ? "is-invalid" : null; ?>" placeholder="8988xxxxxxx" id="telepon_pemberi" name="telepon_pemberi" value="<?= old('telepon_pemberi'); ?>">
+                <input type="tel" class="form-control <?= session('errors.telepon_pemberi') ? "is-invalid" : null; ?>" placeholder="8128-xxxx-xxx" id="telepon_pemberi" name="telepon_pemberi" value="<?= old('telepon_pemberi'); ?>">
               </div>
               <?php if (!session('errors.telepon_pemberi')) : ?>
-                <small id="telepon_pemberi_help" class="form-text text-muted text-end">Nomor Whatsapp lebih baik. Isi tanpa awalan 08 dan 62.</small>
+                <small id="telepon_pemberi_help" class="form-text text-muted text-end">Nomor Whatsapp lebih baik. Isi tanpa awalan 0 atau 62.</small>
               <?php else : ?>
                 <small class="invalid-feedback">
                   <?= session('errors.telepon_pemberi') ?>
@@ -72,7 +72,7 @@
             </div>
             <div class="form-group mb-2 d-flex flex-column">
               <label for="harga_jual">Harga Jual<span class="text-danger">*</span></label>
-              <input type="number" class="form-control <?= session('errors.harga_jual') ? "is-invalid" : null; ?>" id="harga_jual" name="harga_jual" value="<?= old('harga_jual'); ?>">
+              <input type="text" class="form-control <?= session('errors.harga_jual') ? "is-invalid" : null; ?>" id="harga_jual" name="harga_jual" value="<?= old('harga_jual'); ?>" placeholder="Rpx.xxx">
               <?php if (!session('errors.harga_jual')) : ?>
                 <small id="harga_jual_help" class="form-text text-muted text-end">Harga barang.</small>
               <?php else : ?>
@@ -83,7 +83,7 @@
             </div>
             <div class="form-group mb-2 d-flex flex-column">
               <label for="harga_rb">Harga Jual Rumah BUMN<span class="text-danger">*</span></label>
-              <input type="number" class="form-control <?= session('errors.harga_rb') ? "is-invalid" : null; ?>" id="harga_rb" name="harga_rb" value="<?= old('harga_rb'); ?>">
+              <input type="text" class="form-control <?= session('errors.harga_rb') ? "is-invalid" : null; ?>" id="harga_rb" name="harga_rb" value="<?= old('harga_rb'); ?>" placeholder="Rpx.xxx">
               <?php if (!session('errors.harga_rb')) : ?>
                 <small id="harga_rb_help" class="form-text text-muted text-end">Harga jual barang di Rumah BUMN.</small>
               <?php else : ?>
@@ -94,13 +94,13 @@
             </div>
             <div class="form-group mb-2 d-flex flex-column">
               <label for="expired_at">Tanggal Kedaluwarsa<span class="text-danger">*</span></label>
-              <div class="input-group">
+              <div class="input-group ">
                 <span class="input-group-text">
                   <svg class="icon icon-xs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                   </svg>
                 </span>
-                <input class="form-control" id="expired_at" name="expired_at" type="date">
+                <input class="form-control <?= session('errors.expired_at') ? "is-invalid" : null; ?>" id="expired_at" name="expired_at" type="date" value="<?= old('expired_at'); ?>">
               </div>
               <?php if (!session('errors.expired_at')) : ?>
                 <small id="expired_at_help" class="form-text text-muted text-end">Tanggal Kedaluwarsa Barang.</small>
@@ -124,6 +124,42 @@
   if (selectStateInputEl) {
     const choices = new Choices(selectStateInputEl);
   }
+  
+  const harga_jual = document.getElementById('harga_jual');
+    harga_jual.addEventListener('keyup', function(e)
+    {
+        harga_jual.value = formatRupiah(this.value, "Rp");
+    });
+
+  const harga_rb = document.getElementById('harga_rb');
+    harga_rb.addEventListener('keyup', function(e)
+    {
+        harga_rb.value = formatRupiah(this.value, "Rp");
+    });
+
+  function formatRupiah(angka, prefix)
+    {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split    = number_string.split(','),
+            sisa     = split[0].length % 3,
+            rupiah     = split[0].substr(0, sisa),
+            ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+            
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp.' + rupiah : '');
+    }
+
+    const telepon_pemberi = document.getElementById('telepon_pemberi');
+    telepon_pemberi.addEventListener('keyup', function(e)
+    {
+      const splittedValue = this.value.split('-').join('')
+      telepon_pemberi.value = splittedValue.replace(/(\d)(\d)(\d)(\d)(?!$)/g, '$1$2$3$4-')
+    });
 </script>
 <?= $this->endSection(); ?>
 

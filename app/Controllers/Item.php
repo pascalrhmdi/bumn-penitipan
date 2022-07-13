@@ -76,8 +76,15 @@ class Item extends ResourceController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $data = $this->request->getPost();
+
+        // Hapus Rupiah dan titik pada string
+        $data['harga_rb'] = str_replace([".", "Rp"],"",$data['harga_rb']); 
+        $data['harga_jual'] = str_replace([".", "Rp"],"",$data['harga_jual']); 
+        $data['telepon_pemberi'] = str_replace("-","",$data['telepon_pemberi']); 
+
         // Grab POST value to Item Entities
-        $this->entity->fill($this->request->getPost());
+        $this->entity->fill($data);
 
         $this->model->save($this->entity);
 
@@ -109,11 +116,19 @@ class Item extends ResourceController
      */
     public function update($id = null)
     {
+
         $data = array_merge(
             ["id" => $id],
             $this->request->getPost()
         );
 
+        // Hapus Rupiah dan titik pada string
+        $data['harga_rb'] = str_replace([".", "Rp"],"",$data['harga_rb']); 
+        $data['harga_jual'] = str_replace([".", "Rp"],"",$data['harga_jual']); 
+        $data['telepon_pemberi'] = str_replace("-","",$data['telepon_pemberi']); 
+
+        // dd($data);
+        
         $this->entity->fill($data);
 
         $this->model->save($this->entity);

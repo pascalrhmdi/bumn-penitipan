@@ -75,6 +75,11 @@ class Umkm extends ResourceController
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        $data = $this->request->getPost();
+
+        // Hapus Rupiah dan titik pada string
+        $data['nomor_telepon'] = str_replace("-","",$data['nomor_telepon']);
+
         $this->entity->fill($this->request->getPost());
 
         $this->model->save($this->entity);
@@ -104,6 +109,11 @@ class Umkm extends ResourceController
      */
     public function update($id = null)
     {
+        
+        if (!$this->validate($this->model->validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+        
         $data = [
             'id' => $id,
             'nama_umkm' => $this->request->getPost('nama_umkm'),
@@ -111,9 +121,10 @@ class Umkm extends ResourceController
             'alamat' => $this->request->getPost('alamat'),
         ];
 
-        $this->entity->fill($data);
+        // Hapus dash pada string
+        $data['nomor_telepon'] = str_replace("-","",$data['nomor_telepon']);
 
-        // dd($this->entity);
+        $this->entity->fill($data);
 
         $this->model->save($this->entity);
 
