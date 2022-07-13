@@ -26,9 +26,18 @@ class UmkmModel extends Model
 
     // Validation
     protected $validationRules      = [
-        'nama_umkm'     => 'required|min_length[3]',
-        'nomor_telepon' => 'required|numeric|min_length[9]',
-        'alamat'        => 'required',
+        'nama_umkm'     => [
+            'label' => "Nama UMKM",
+            'rules' => 'required|min_length[3]',
+        ],
+        'nomor_telepon' => [
+            'label' => "Nomor Telepon UMKM",
+            'rules' =>  'required|numeric|min_length[9]',
+        ],
+        'alamat'        => [
+            'label' => "Alamat",
+            'rules' => 'required',
+        ],
     ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;

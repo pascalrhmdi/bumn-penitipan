@@ -27,13 +27,34 @@ class ItemModel extends Model
     // Validation
     protected $validationRules      = [
         'id_user'       => 'required|numeric',
-        'id_umkm'       => 'required|numeric',
-        'nama_barang'       => 'required',
-        'harga_rb'          => 'required|min_length[3]|numeric',
-        'harga_jual'        => 'required|min_length[3]|numeric',
-        'nama_pemberi'      => 'required|alpha_space',
-        'telepon_pemberi'   => 'required|min_length[9]|max_length[20]|numeric',
-        'expired_at'      => 'required|valid_date',
+        'id_umkm'       => [
+            'label' => "Nama UMKM",
+            'rules' => 'required|numeric',
+        ],
+        'nama_barang'       => [
+            'label' => "Nama Barang",
+            'rules' => 'required',
+        ],
+        'harga_rb'          => [
+            'label' => "Harga RB",
+            'rules' => 'required|min_length[3]|numeric',
+        ],
+        'harga_jual'        => [
+            'label' => "Harga Jual di RB",
+            'rules' => 'required|min_length[3]|numeric',
+        ],
+        'nama_pemberi'      => [
+            'label' => "Nama Pemberi",
+            'rules' => 'required|alpha_space',
+        ],
+        'telepon_pemberi'   => [
+            'label' => "Nomor Telepon Pemberi",
+            'rules' => 'required|min_length[9]|max_length[20]|numeric',
+        ],
+        'expired_at'      => [
+            'label' => "Tanggal Kedaluwarsa",
+            'rules' => 'required|valid_date',
+        ],
     ];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
