@@ -11,6 +11,8 @@ class Item extends Entity
         'id_user'           => null,
         'id_umkm'           => null,
         'nama_barang'       => null,
+        'quantity'       => null,
+        'gambar_barang'     => null,
         'harga_rb'          => null,
         'harga_jual'        => null,
         'nama_pemberi'      => null,
@@ -66,7 +68,14 @@ class Item extends Entity
         } else {
             $this->attributes['telepon_pemberi'] =  "62" . $nomor;
         }
-
+        
         return $this;
+    }
+
+    public function getLaba()
+    {
+        $keuntungan = $this->attributes['harga_rb'] - $this->attributes['harga_jual'];
+
+        return "Rp" . number_format($keuntungan, 2, ',', '.');
     }
 }

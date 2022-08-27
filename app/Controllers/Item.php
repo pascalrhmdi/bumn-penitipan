@@ -7,12 +7,13 @@ use CodeIgniter\RESTful\ResourceController;
 
 class Item extends ResourceController
 {
-    
+
     protected $modelName = 'App\Models\ItemModel';
     protected $format = 'json';
     private \App\Entities\Item $entity;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->entity = new \App\Entities\Item();
     }
 
@@ -20,15 +21,13 @@ class Item extends ResourceController
      * Return an array of resource objects, themselves in array format
      *
      * @return mixed
-     */ 
+     */
     public function index()
     {
         $data = [
             'title' => 'Barang',
             'items' => $this->model->getAllWithUmkms(),
         ];
-
-        // dd($data);
 
         return view('item/index', $data);
     }
@@ -71,24 +70,43 @@ class Item extends ResourceController
      * @return mixed
      */
     public function create()
-    {   
-        if(!$this->validate($this->model->validationRules)){
+    {
+        if (!$this->validate($this->model->getValidationRules())) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
+        // Ambil Semua Data
         $data = $this->request->getPost();
+        $img = $this->request->getFile('gambar_barang');
 
         // Hapus Rupiah dan titik pada string
-        $data['harga_rb'] = str_replace([".", "Rp"],"",$data['harga_rb']); 
-        $data['harga_jual'] = str_replace([".", "Rp"],"",$data['harga_jual']); 
-        $data['telepon_pemberi'] = str_replace("-","",$data['telepon_pemberi']); 
+        $data['harga_rb'] = str_replace([".", "Rp"], "", $data['harga_rb']);
+        $data['harga_jual'] = str_replace([".", "Rp"], "", $data['harga_jual']);
+        $data['telepon_pemberi'] = str_replace("-", "", $data['telepon_pemberi']);
 
-        // Grab POST value to Item Entities
-        $this->entity->fill($data);
+        if ($img->isValid() && !$img->hasMoved()) {
+            // Penamaan File: Random
+            $file_name = $data['gambar_barang'] = $img->getRandomName();
 
-        $this->model->save($this->entity);
+            
+            $this->entity->fill($data);
+            $this->model->save($this->entity);
+            
+            // Library Image Manipulation
+            // Move ke file Public/uploads
+            $image = \Config\Services::image();
+            $image
+                ->withFile($img)
+                ->resize(720, 540, TRUE)
+                ->save(FCPATH . "uploads/$file_name");
+        } else {
+            // Jika Tidak Mengirimkan File Pake Placeholder Image
+            $data['gambar_barang'] = "image-placeholder.png";
+            $this->entity->fill($data);
+            $this->model->save($this->entity);
+        }
 
-        return redirect('admin/item');
+        return redirect('admin/item')->with('message', "Barang Berhasil Ditambahbahkan");
     }
 
     /**
@@ -116,6 +134,9 @@ class Item extends ResourceController
      */
     public function update($id = null)
     {
+        if (!$this->validate($this->model->getValidationRules())) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
 
         $data = array_merge(
             ["id" => $id],
@@ -123,17 +144,34 @@ class Item extends ResourceController
         );
 
         // Hapus Rupiah dan titik pada string
-        $data['harga_rb'] = str_replace([".", "Rp"],"",$data['harga_rb']); 
-        $data['harga_jual'] = str_replace([".", "Rp"],"",$data['harga_jual']); 
-        $data['telepon_pemberi'] = str_replace("-","",$data['telepon_pemberi']); 
+        $data['harga_rb'] = str_replace([".", "Rp"], "", $data['harga_rb']);
+        $data['harga_jual'] = str_replace([".", "Rp"], "", $data['harga_jual']);
+        $data['telepon_pemberi'] = str_replace("-", "", $data['telepon_pemberi']);
 
-        // dd($data);
-        
-        $this->entity->fill($data);
+        $img = $this->request->getFile('gambar_barang');
 
-        $this->model->save($this->entity);
+        // Jika File kosong maka tidak diubah
+        if ($img->isValid() && !$img->hasMoved()) {
+            // Penamaan File: Random
+            $file_name = $data['gambar_barang'] = $img->getRandomName();
 
-        return redirect('admin/item');
+            $this->entity->fill($data);
+            $this->model->save($this->entity);
+
+            // Library Image Manipulation
+            // Move ke file Public/uploads
+            $image = \Config\Services::image();
+            $image
+                ->withFile($img)
+                ->resize(720, 540, TRUE)
+                ->save(FCPATH . "uploads/$file_name");
+        } else {
+            // Jika File tidak ada yang di upload, telah di pindah, dll.
+            $this->entity->fill($data);
+            $this->model->save($this->entity);
+        }
+
+        return redirect('admin/item')->with('message', "Barang Berhasil Diubah");
     }
 
     /**
@@ -143,6 +181,12 @@ class Item extends ResourceController
      */
     public function delete($id = null)
     {
+        $item = $this->model->find($id);
+
+        if ($item->gambar_barang !== "image-placeholder.png") {
+            unlink("uploads/" . $item->gambar_barang);
+        }
+
         $this->model->delete($id);
 
         return redirect('admin/item');

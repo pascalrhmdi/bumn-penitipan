@@ -26,7 +26,16 @@ class CreateItems extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100,
             ],
+            'gambar_barang' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
             'harga_rb' => [
+                'type'          => 'INT',
+                'unsigned'      => true,
+            ],
+            'quantity' => [
                 'type'          => 'INT',
                 'unsigned'      => true,
             ],
@@ -40,7 +49,7 @@ class CreateItems extends Migration
             ],
             'telepon_pemberi' => [
                 'type' => 'VARCHAR',
-                'constraint' => 13,
+                'constraint' => 15,
             ],
             'expired_at'       => ['type' => 'datetime'],
             'created_at'       => ['type' => 'datetime', 'null' => true],

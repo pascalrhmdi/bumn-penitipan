@@ -39,7 +39,7 @@ return [
   'not_in_list'           => 'Bidang {field} tidak boleh salah satu dari: {param}.',
   'numeric'               => 'Bidang {field} hanya boleh mengandung angka.',
   'regex_match'           => 'Bidang {field} tidak dalam format yang benar.',
-  'required'              => 'Bidang {field} diperlukan, mohon untuk diisi.',
+  'required'              => 'Bidang {field} diperlukan.',
   'required_with'         => 'Bidang {field} diperlukan saat {param} hadir.',
   'required_without'      => 'Bidang {field} diperlukan saat {param} tidak hadir.',
   'string'                => 'Bidang {field} harus berupa string yang valid.',
@@ -56,10 +56,10 @@ return [
   'valid_cc_num' => '{field} tidak tampak sebagai sebuah nomor kartu kredit yang valid.',
 
   // Files
-  'uploaded' => '{field} bukan sebuah berkas diunggah yang valid.',
-  'max_size' => '{field} terlalu besar dari sebuah berkas.',
-  'is_image' => '{field} bukan berkas gambar diunggah yang valid.',
-  'mime_in'  => '{field} tidak memiliki sebuah tipe mime yang valid.',
-  'ext_in'   => '{field} tidak memiliki sebuah ekstensi berkas yang valid.',
-  'max_dims' => '{field} bukan gambar, atau terlalu lebar atau tinggi.',
+  'uploaded' => 'File bukan sebuah berkas unggahan yang valid.',
+  'max_size' => 'File terlalu besar dari ketentuan.',
+  'is_image' => 'File bukan gambar.',
+  'mime_in'  => 'File tidak memiliki sebuah tipe mime yang valid.',
+  'ext_in'   => 'ekstensi berkas tidak valid.',
+  'max_dims' => 'Dimensi file terlalu lebar/tinggi.',
 ];

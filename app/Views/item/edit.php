@@ -2,18 +2,13 @@
 
 <?= $this->section('main'); ?>
 
-<?php
-  // d($item->expired_at);
-  // d($item);
-?>
 <div class="row">
   <div class="my-3">
     <h4>Form Edit Barang</h4>
     <p>Mengedit data Barang, formulir dengan tanda <span class="text-danger">*</span> wajib diisi.</p>
-
     <div class="card border-0 shadow components-section">
       <div class="card-body">
-        <form action="<?= route_to('App\Controllers\Item::update', $item->item_id) ?>" method="POST"> 
+        <form action="<?= route_to('App\Controllers\Item::update', $item->item_id) ?>" method="POST"  enctype="multipart/form-data"> 
           <?= csrf_field(); ?>
           <input type="hidden" name="_method" value="PUT">
           <input type="hidden" name="id_user" value="<?= user_id(); ?>">
@@ -50,7 +45,7 @@
             <div class="form-group mb-2 d-flex flex-column">
               <label for="telepon_pemberi">Nomor Telepon Pemberi<span class="text-danger">*</span></label>
               <div class="input-group">
-                <span class="input-group-text" id="nomor_telepon">+62</span>
+                <span class="input-group-text">+62</span>
                 <input type="text" class="form-control <?= session('errors.telepon_pemberi') ? "is-invalid" : null; ?>" placeholder="8988xxxxxxx" id="telepon_pemberi" name="telepon_pemberi" value="<?= old('telepon_pemberi') ?? $item->getTeleponPemberi(true); ?>">
               </div>
               <?php if (!session('errors.telepon_pemberi')) : ?>
@@ -64,6 +59,20 @@
           </div>
           <h6 class="fw-bolder">Data Barang</h6>
           <div class="ms-5 mb-4">
+          <div class="d-flex col-12 mb-2">
+              <div class="form-group d-flex flex-column col-7">
+                <label for="gambar_barang">Gambar Barang</label>
+                <input type="file" accept="image/*" onchange="loadFile(event)" class="form-control <?= session('errors.gambar_barang') ? "is-invalid" : null; ?>" id="gambar_barang" name="gambar_barang">
+                <?php if (!session('errors.gambar_barang')) : ?>
+                  <small id="gambar_barang_help" class="form-text text-muted text-end">Gambar Barang, kosongkan bila tidak ingin diubah.</small>
+                <?php else : ?>
+                  <small class="invalid-feedback">
+                    <?= session('errors.gambar_barang') ?>
+                  </small>
+                <?php endif ?>
+              </div>
+              <img class="col-3 mx-auto img-thumbnail rounded" style="min-height: 200px; " id="output" src="<?= "/uploads/$item->gambar_barang" ?>"/>
+            </div>
             <div class="form-group mb-2 d-flex flex-column">
               <label for="nama_barang">Nama Barang<span class="text-danger">*</span></label>
               <input type="text" class="form-control <?= session('errors.nama_barang') ? "is-invalid" : null; ?>" id="nama_barang" name="nama_barang" value="<?= old('nama_barang') ?? $item->nama_barang; ?>">
@@ -166,6 +175,14 @@
       const splittedValue = this.value.split('-').join('')
       telepon_pemberi.value = splittedValue.replace(/(\d)(\d)(\d)(\d)(?!$)/g, '$1$2$3$4-')
     });
+    
+  let loadFile = function(event) {
+    let output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
 </script>
 <?= $this->endSection(); ?>
 

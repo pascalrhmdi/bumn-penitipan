@@ -15,7 +15,7 @@ class ItemModel extends Model
     protected $returnType       = Item::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_user', 'id_umkm', 'nama_barang', 'harga_rb', 'harga_jual', 'nama_pemberi', 'telepon_pemberi', 'expired_at'];
+    protected $allowedFields    = ['id_user', 'id_umkm', 'nama_barang', 'gambar_barang', 'harga_rb', 'harga_jual', 'quantity', 'nama_pemberi', 'telepon_pemberi', 'expired_at'];
 
     // Dates
     protected $useTimestamps = true;
@@ -35,13 +35,23 @@ class ItemModel extends Model
             'label' => "Nama Barang",
             'rules' => 'required',
         ],
+        'quantity'       => [
+            'label' => "Jumlah Barang",
+            'rules' => 'required|numeric',
+        ],
+        'gambar_barang'       => [
+            'label' => "Gambar Barang",
+            'rules' =>
+                'is_image[gambar_barang]'
+                . '|mime_in[gambar_barang,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
+        ],
         'harga_rb'          => [
             'label' => "Harga RB",
-            'rules' => 'required|min_length[3]|numeric',
+            'rules' => 'required|min_length[3]|alpha_numeric_punct',
         ],
         'harga_jual'        => [
             'label' => "Harga Jual di RB",
-            'rules' => 'required|min_length[3]|numeric',
+            'rules' => 'required|min_length[3]|alpha_numeric_punct',
         ],
         'nama_pemberi'      => [
             'label' => "Nama Pemberi",
@@ -49,7 +59,7 @@ class ItemModel extends Model
         ],
         'telepon_pemberi'   => [
             'label' => "Nomor Telepon Pemberi",
-            'rules' => 'required|min_length[9]|max_length[20]|numeric',
+            'rules' => 'required|min_length[9]|max_length[20]|alpha_numeric_punct',
         ],
         'expired_at'      => [
             'label' => "Tanggal Kedaluwarsa",

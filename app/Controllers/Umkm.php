@@ -77,10 +77,10 @@ class Umkm extends ResourceController
 
         $data = $this->request->getPost();
 
-        // Hapus Rupiah dan titik pada string
+        // Hapus dash pada string
         $data['nomor_telepon'] = str_replace("-","",$data['nomor_telepon']);
 
-        $this->entity->fill($this->request->getPost());
+        $this->entity->fill($data);
 
         $this->model->save($this->entity);
 

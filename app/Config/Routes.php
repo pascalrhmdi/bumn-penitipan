@@ -50,12 +50,16 @@ $routes->get('create-table', function () {
         }
 });
 
-// whatsapp://send?text=Hello%2C%20World!
-
 $routes->addRedirect('/', 'admin');
 
 $routes->group('admin', ['filter' => 'login'], static function ($routes) {
     $routes->get('/', 'Admin::index');
+    // Edit Profil
+    $routes->get('edit', '\Myth\Auth\Controllers\AuthController::resetPassword', ['as' => 'edit']);
+    $routes->put('edit/(:num)', 'Admin::update/$1');
+    // Reset Password
+    $routes->put('reset-password', '\Myth\Auth\Controllers\AuthController::attemptReset', ['as' => 'reset-password']);
+
     $routes->resource('umkm', ['placeholder' => '(:num)']);
     $routes->resource('item', ['placeholder' => '(:num)']);
 });

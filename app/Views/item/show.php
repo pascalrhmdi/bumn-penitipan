@@ -41,59 +41,66 @@
         </div>
       </div>
 
-<?php
-  $keuntungan = $item->harga_rb - $item->harga_jual;
-  $keuntungan_in_rupiah = "Rp" . number_format($keuntungan, 2, ',', '.');
-?>
+      <?php
+      $keuntungan = $item->harga_rb - $item->harga_jual;
+      $keuntungan_in_rupiah = "Rp" . number_format($keuntungan, 2, ',', '.');
+      ?>
 
       <!-- Card Body -->
       <div class="card-body">
-        <h5 class="mb-0">Detail Barang</h3>
-          <table class="table table-borderless w-auto ms-2 mb-3">
-            <tbody>
-              <tr>
-                <th class="fw-bold" scope="row" style="min-width: 240px;">Nama barang</th>
-                <td>:&nbsp;<?= $item->nama_barang; ?></td>
-              </tr>
-              <tr>
-                <th class="fw-bold" scope="row">Harga Jual</th>
-                <td>:&nbsp;<?= $item->getHargaJual(true); ?></td>
-              </tr>
-              <tr>
-                <th class="fw-bold" scope="row">Harga Jual di RB</th>
-                <td>:&nbsp;<?= $item->getHargaRb(true); ?></td>
-              </tr>
-              <tr class="text-success">
-                <th class="fw-bold" scope="row">Laba</th>
-                <td >:&nbsp;<?= $keuntungan_in_rupiah; ?></td>
-              </tr>
-              <tr class="text-danger">
-                <th class="fw-bold" scope="row">Tanggal Kedaluwarsa Barang</th>
-                <td>:&nbsp;<?= $item->expired_at->toLocalizedString('d MMMM YYYY'); ?></td>
-              </tr>
-            </tbody>
-          </table>
-        <h5 class="mb-0">Detail Umkm</h3>
-        <table class="table table-borderless w-auto ms-2 mb-2">
-            <tbody>
-              <tr>
-                <th class="fw-bold" scope="row" style="min-width: 240px;">Nama Pemberi Barang</th>
-                <td>:&nbsp;<?= $item->nama_pemberi; ?></td>
-              </tr>
-              <tr>
-                <th class="fw-bold" scope="row">Nomor Telepon Pemberi Barang</th>
-                <td>:&nbsp;<a href="http://wa.me/<?= $item->telepon_pemberi; ?>/?text=%5BPesan%20dari%20Rumah%20BUMN%20Denpasar%5D%0ASelamat%20_%3F_%2C%20semoga%20bapak%2Fibu%20selalu%20diberi%20kesehatan.%0AKami%20dari%20Rumah%20BUMN%20Denpasar%2C%20Bali." target="_blank"><?= $item->telepon_pemberi; ?>&nbsp;<img src="<?= base_url("images/icons/whatsapp.png"); ?>" alt="Logo WA" height="23"></a></td>
-              </tr>
-              <tr>
-                <th class="fw-bold" scope="row">Tanggal Barang Diberikan</th>
-                <td>:&nbsp;<?= $item->created_at->toLocalizedString('d MMMM YYYY'); ?></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="card-footer d-flex justify-content-end">
-            <a href="http://wa.me/<?= $item->telepon_pemberi; ?>/?text=%5BPesan%20dari%20Rumah%20BUMN%20Denpasar%5D%0ASelamat%20_%3F_%2C%20semoga%20bapak%2Fibu%20selalu%20diberi%20kesehatan.%0AKami%20dari%20Rumah%20BUMN%20Denpasar%2C%20Bali." class="btn btn-primary mx-2" target="_blank">Hubungi Pemberi Barang</a>
-            <a href="<?= site_url('/admin/umkm/' . $item->id_umkm); ?>" class="btn btn-primary">Lihat UMKM</a>
+        <div class="d-flex col-12">
+          <div class="col-8">
+            <h5 class="mb-0">Detail Barang</h5>
+            <div>
+              <table class="table table-borderless w-auto ms-2 mb-3">
+                <tbody>
+                  <tr>
+                    <th class="fw-bold" scope="row" style="min-width: 240px;">Nama barang</th>
+                    <td>:&nbsp;<?= $item->nama_barang; ?>&nbsp;(<?= $item->quantity; ?> pcs)</td>
+                  </tr>
+                  <tr>
+                    <th class="fw-bold" scope="row">Harga Jual</th>
+                    <td>:&nbsp;<?= $item->getHargaJual(true); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="fw-bold" scope="row">Harga Jual di RB</th>
+                    <td>:&nbsp;<?= $item->getHargaRb(true); ?></td>
+                  </tr>
+                  <tr class="text-success">
+                    <th class="fw-bold" scope="row">Laba</th>
+                    <td>:&nbsp;<?= $keuntungan_in_rupiah; ?></td>
+                  </tr>
+                  <tr class="text-danger">
+                    <th class="fw-bold" scope="row">Tanggal Kedaluwarsa Barang</th>
+                    <td>:&nbsp;<?= $item->expired_at->toLocalizedString('d MMMM YYYY'); ?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+          <img class="col-3 mx-auto img-thumbnail rounded" src="<?= "/uploads/$item->gambar_barang" ?>" />
+        </div>
+        <h5 class="mb-0">Detail Umkm</h5>
+        <table class="table table-borderless w-auto ms-2 mb-2">
+          <tbody>
+            <tr>
+              <th class="fw-bold" scope="row" style="min-width: 240px;">Nama Pemberi Barang</th>
+              <td>:&nbsp;<?= $item->nama_pemberi; ?></td>
+            </tr>
+            <tr>
+              <th class="fw-bold" scope="row">Nomor Telepon Pemberi Barang</th>
+              <td>:&nbsp;<a href="http://wa.me/<?= $item->telepon_pemberi; ?>/?text=%5BPesan%20dari%20Rumah%20BUMN%20Denpasar%5D%0ASelamat%20_%3F_%2C%20semoga%20bapak%2Fibu%20selalu%20diberi%20kesehatan.%0AKami%20dari%20Rumah%20BUMN%20Denpasar%2C%20Bali." target="_blank"><?= $item->telepon_pemberi; ?>&nbsp;<img src="<?= base_url("images/icons/whatsapp.png"); ?>" alt="Logo WA" height="23"></a></td>
+            </tr>
+            <tr>
+              <th class="fw-bold" scope="row">Tanggal Barang Diberikan</th>
+              <td>:&nbsp;<?= $item->created_at->toLocalizedString('d MMMM YYYY'); ?></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="card-footer d-flex justify-content-end">
+          <a href="http://wa.me/<?= $item->telepon_pemberi; ?>/?text=%5BPesan%20dari%20Rumah%20BUMN%20Denpasar%5D%0ASelamat%20_%3F_%2C%20semoga%20bapak%2Fibu%20selalu%20diberi%20kesehatan.%0AKami%20dari%20Rumah%20BUMN%20Denpasar%2C%20Bali." class="btn btn-primary mx-2" target="_blank">Hubungi Pemberi Barang</a>
+          <a href="<?= site_url('/admin/umkm/' . $item->id_umkm); ?>" class="btn btn-primary">Lihat UMKM</a>
+        </div>
       </div>
     </div>
   </div>

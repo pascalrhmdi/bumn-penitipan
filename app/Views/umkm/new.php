@@ -25,7 +25,7 @@
           <div class="mb-3 d-flex flex-column">
             <label for="nomor_telepon">Nomor Telepon<span class="text-danger">*</span></label>
             <div class="input-group">
-              <span class="input-group-text" id="nomor_telepon">+62</span>
+              <span class="input-group-text">+62</span>
               <input type="tel" class="form-control <?= session('errors.nomor_telepon') ? "is-invalid" : null; ?>" id="nomor_telepon" placeholder="8988xxxxxxx" name="nomor_telepon" value="<?= old('nomor_telepon') ?>">
             </div>
             <?php if (!session('errors.nomor_telepon')) : ?>
@@ -54,7 +54,7 @@
   </div>
 </div>
 
-<?= $this->section('pageStyles'); ?>
+<?= $this->section('pageScripts'); ?>
 <script>
   const nomor_telepon = document.getElementById('nomor_telepon');
     nomor_telepon.addEventListener('keyup', function(e)

@@ -32,11 +32,11 @@ class UmkmModel extends Model
         ],
         'nomor_telepon' => [
             'label' => "Nomor Telepon UMKM",
-            'rules' =>  'required|numeric|min_length[9]',
+            'rules' =>  'required|alpha_numeric_punct|min_length[9]',
         ],
         'alamat'        => [
             'label' => "Alamat",
-            'rules' => 'required',
+            'rules' => 'required|string',
         ],
     ];
     protected $skipValidation       = false;
