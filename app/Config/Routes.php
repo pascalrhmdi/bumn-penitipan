@@ -53,7 +53,7 @@ $routes->get('create-table', function () {
 $routes->addRedirect('/', 'admin');
 
 $routes->group('admin', ['filter' => 'login'], static function ($routes) {
-    $routes->get('/', 'Admin::index');
+    $routes->get('/', 'Admin::index', ['as' => "home"]);
     // Edit Profil
     $routes->get('edit', '\Myth\Auth\Controllers\AuthController::resetPassword', ['as' => 'edit']);
     $routes->put('edit/(:num)', 'Admin::update/$1');

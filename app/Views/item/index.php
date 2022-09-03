@@ -1,18 +1,27 @@
+<?php
+$session = session();
+foreach ($items as $index => $item) {
+  // Check if the item is expired in less than 3 day
+  if ((time() - $item->expired_at->timestamp) >= 259.200) {
+    $session->setFlashdata('error-dismiss', "Ada Barang Yang Hampir atau Telah Kedaluwarsa, Mohon Periksa Kembali Barang Tersebut."); 
+    break;
+  }
+}
+?>
+
 <?= $this->extend('layouts/app.php') ?>
 
 <?= $this->section('main') ?>
-
 <div class="row">
   <div class="my-3">
     <h4>Tabel Barang</h4>
     <p>Berisi tabel Barang yang telah dititipkan ke Rumah BUMN Denpasar, Bali.</p>
   </div>
-  <?= view('Myth\Auth\Views\_message_block') ?>
   <div class="row my-3 justify-content-end">
     <a class="btn btn-primary col-3 col-xl-2 align-items-center" href="<?= site_url("/admin/item/new"); ?>">
       <svg class="icon icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-    </svg>
+      </svg>
       Tambah Barang</a>
   </div>
   <div class="table-responsive">
@@ -29,6 +38,7 @@
         </tr>
       </thead>
       <tbody>
+
         <?php
         foreach ($items as $index => $item) : ?>
           <tr>
@@ -36,8 +46,8 @@
             <td><?= $item->nama_barang; ?></td>
             <td><?= $item->harga_rb; ?></td>
             <td data-order="<?= $item->item_created_at->timestamp; ?>"><?= $item->item_created_at->toLocalizedString('dd MMMM YYYY'); ?></td>
-            <td data-order="<?= $item->expired_at->timestamp; ?>"><?= $item->expired_at->toLocalizedString('dd MMMM YYYY') ?></td>
-            <td><a style="color:forestgreen" href="<?= site_url("admin/umkm/" . $item->id_umkm); ?>"><?= $item->nama_umkm; ?></a></td>
+            <td class="<?php if ($item->expired_at->timestamp <= time()) echo "text-danger" ?>" data-order="<?= $item->expired_at->timestamp; ?>"><?= $item->expired_at->toLocalizedString('dd MMMM YYYY') ?></td>
+            <td><a class="fw-bold" href="<?= site_url("admin/umkm/" . $item->id_umkm); ?>"><?= $item->nama_umkm; ?></a></td>
             <td class="d-flex justify-content-center gap-2 ">
               <a class="btn btn-sm btn-secondary" href="<?= site_url("admin/item/" . $item->item_id); ?>" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Lihat">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -74,12 +84,10 @@
 <script>
   $(document).ready(function() {
     $('#item_table').DataTable({
-      columnDefs: [    
-          {
-              targets: 2, 
-              render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
-          }
-        ],
+      columnDefs: [{
+        targets: 2,
+        render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
+      }],
     });
   });
 </script>

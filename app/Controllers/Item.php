@@ -189,6 +189,6 @@ class Item extends ResourceController
 
         $this->model->delete($id);
 
-        return redirect('admin/item');
+        return redirect('admin/item')->with('message', "Barang $item->nama_barang Berhasil Dihapus");
     }
 }

@@ -24,6 +24,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'login'         => \Myth\Auth\Filters\LoginFilter::class,
+        'role'          => \Myth\Auth\Filters\RoleFilter::class,
     ];
 
     /**
@@ -58,7 +59,7 @@ class Filters extends BaseConfig
     public $methods = [
         'post' => ['csrf']
     ];
-    
+
     /**
      * List of filter aliases that should run on any
      * before or after URI patterns.

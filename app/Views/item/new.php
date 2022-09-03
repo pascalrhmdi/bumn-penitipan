@@ -99,7 +99,7 @@
             </div>
             <div class="d-flex col-12 justify-content-between">
               <div class="form-group mb-2 d-flex flex-column col-6 pe-4">
-                <label for="harga_jual">Harga Jual<span class="text-danger">*</span></label>
+                <label for="harga_jual">Harga Jual (Rp)<span class="text-danger">*</span></label>
                 <input type="text" class="form-control <?= session('errors.harga_jual') ? "is-invalid" : null; ?>" id="harga_jual" name="harga_jual" value="<?= old('harga_jual'); ?>" placeholder="Rpx.xxx">
                 <?php if (!session('errors.harga_jual')) : ?>
                   <small id="harga_jual_help" class="form-text text-muted text-end">Harga barang.</small>
@@ -110,7 +110,7 @@
                 <?php endif ?>
               </div>
               <div class="form-group mb-2 d-flex flex-column col-6 ps-4">
-                <label for="harga_rb">Harga Jual Rumah BUMN<span class="text-danger">*</span></label>
+                <label for="harga_rb">Harga Jual Rumah BUMN (Rp)<span class="text-danger">*</span></label>
                 <input type="text" class="form-control <?= session('errors.harga_rb') ? "is-invalid" : null; ?>" id="harga_rb" name="harga_rb" value="<?= old('harga_rb'); ?>" placeholder="Rpx.xxx">
                 <?php if (!session('errors.harga_rb')) : ?>
                   <small id="harga_rb_help" class="form-text text-muted text-end">Harga jual barang di Rumah BUMN.</small>

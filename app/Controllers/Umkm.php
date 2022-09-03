@@ -84,7 +84,7 @@ class Umkm extends ResourceController
 
         $this->model->save($this->entity);
 
-        return redirect('admin/umkm');
+        return redirect('admin/umkm')->with('message', "UMKM " . $data["nama_umkm"] . " Berhasil Dibuat");
     }
 
     /**
@@ -128,7 +128,7 @@ class Umkm extends ResourceController
 
         $this->model->save($this->entity);
 
-        return redirect('admin/umkm');
+        return redirect('admin/umkm')->with('message', "UMKM " . $data["nama_umkm"] . " Berhasil Diubah");
     }
 
     /**
@@ -140,6 +140,6 @@ class Umkm extends ResourceController
     {
         $this->model->delete($id);
 
-        return redirect('admin/umkm');
+        return redirect('admin/umkm')->with('message', "UMKM Berhasil Dihapus");
     }
 }

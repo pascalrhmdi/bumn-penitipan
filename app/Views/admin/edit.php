@@ -6,8 +6,6 @@
   <div class="my-3">
     <h4>Edit Profil</h4>
     <p>Mengubah profil dan password admin, formulir dengan tanda <span class="text-danger">*</span> wajib diisi.</p>
-
-    <?= view('Myth\Auth\Views\_message_block') ?>
     
     <div class="col-12 d-flex flex-row">
       <div class="card col-6 border-0 shadow components-section me-1">

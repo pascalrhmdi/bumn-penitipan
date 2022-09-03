@@ -12,7 +12,6 @@ helper('text');
     <p class="m-0">Berisi tabel UMKM yang berlokasi di Denpasar, Bali.</p>
     <small class="text-muted">*Harap diperhatikan, menghapus UMKM juga menghapus barang-barang UMKM tersebut</small>
   </div>
-  <?= view('Myth\Auth\Views\_message_block') ?>
   <div class="row my-3 justify-content-end">
     <a class="btn btn-primary col-3 col-xl-2 align-items-center" href="<?= site_url("/admin/umkm/new"); ?>">
       <svg class="icon icon-xs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
