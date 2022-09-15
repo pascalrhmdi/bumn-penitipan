@@ -87,7 +87,7 @@
               </div>
               <div class="form-group mb-2 d-flex flex-column col-6 ps-4">
                 <label for="quantity">Jumlah Barang <span class="text-muted fw-ligh">(pcs)</span><span class="text-danger">*</span></label>
-                <input type="number" class="form-control <?= session('errors.quantity') ? "is-invalid" : null; ?>" id="quantity" name="quantity" value="<?= old('quantity'); ?>">
+                <input type="number" class="form-control <?= session('errors.quantity') ? "is-invalid" : null; ?>" id="quantity" name="quantity" value="<?= old('quantity') ?? $item->quantity; ?>">
                 <?php if (!session('errors.quantity')) : ?>
                   <small id="quantity_help" class="form-text text-muted text-end">Jumlah barang.</small>
                 <?php else : ?>

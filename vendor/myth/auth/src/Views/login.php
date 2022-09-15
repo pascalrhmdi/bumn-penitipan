@@ -66,7 +66,7 @@
                 <div class="form-check">
                   <input type="checkbox" name="remember" class="form-check-input" checked>
                   <small>
-                    <?= lang('Auth.rememberMe') ?> selama 3 jam kedepan
+                    <span class="text-italic">Login</span> untuk selama 3 jam kedepan
                   </small>
                   </label>
                 </div>
