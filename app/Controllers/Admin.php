@@ -17,11 +17,13 @@ class Admin extends BaseController
     {
         $umkmModel = model("UmkmModel");
         $itemModel = model("ItemModel");
+        $userModel = model(UserModel::class);
 
         $data = array(
             'title' => "Dashboard",
             'umkms' => $umkmModel->countAll(),
             'items' => $itemModel->countAll(),
+            'users' => $userModel->countAll(),
         );
 
         return view('dashboard', $data);

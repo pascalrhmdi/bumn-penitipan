@@ -128,9 +128,9 @@ class AuthController extends Controller
 	public function register()
 	{
 		// check if already logged in.
-		if ($this->auth->check()) {
-			// return redirect()->back();
-		}
+		// if ($this->auth->check()) {
+		// 	return redirect()->back();
+		// }
 
 		// Check if registration is allowed
 		if (!$this->config->allowRegistration) {

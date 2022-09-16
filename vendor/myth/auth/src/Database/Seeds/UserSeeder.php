@@ -10,8 +10,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [
-          'email'    => 'admin@admin.com',
-          'username' => 'Admin',
+          'email'    => 'admin@rbdenpasar.com',
+          'username' => 'Super Admin',
           'password_hash' => Password::hash('12345678'),
           'active' => 1,
           'created_at' => date('Y-m-d H:i:s'),

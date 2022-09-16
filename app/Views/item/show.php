@@ -114,6 +114,9 @@
         targets: 2,
         render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
       }, ],
+      language: {
+        emptyTable: 'Data barang kosong untuk saat ini, silahkan inputkan barang'
+      }
     });
   });
 </script>

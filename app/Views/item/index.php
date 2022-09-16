@@ -38,7 +38,6 @@ foreach ($items as $index => $item) {
         </tr>
       </thead>
       <tbody>
-
         <?php
         foreach ($items as $index => $item) : ?>
           <tr>
@@ -63,45 +62,45 @@ foreach ($items as $index => $item) {
               <!--  -->
 
               <!-- Button trigger modal -->
-              <div data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
-                <button type="button" class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#confirmDelete" onclick="confirm_modal('<?= $item->nama_barang ?>')">
+              <div data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus" onclick="confirm_modal('<?= $item->nama_barang ?>', <?= $item->item_id ?>)">
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                     <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
                   </svg>
                 </button>
               </div>
 
-              <!-- Modal -->
-              <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="confirmDeleteLabel">Hapus Barang</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Yakin ingin menghapus barang <span id="namaBarang"></span>?
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <form action="<?= site_url("admin/item/" . $item->item_id); ?>" method="POST">
-                        <?= csrf_field(); ?>
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button class="btn btn-danger" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
-                          Hapus
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--  -->
             </td>
           </tr>
 
         <?php
         endforeach
         ?>
+        <!-- Modal -->
+        <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Hapus Barang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Yakin ingin menghapus barang <span id="namaBarang"></span>?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form method="POST" id="formId">
+                  <?= csrf_field(); ?>
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <button class="btn btn-danger" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                    Hapus
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  -->
       </tbody>
     </table>
   </div>
@@ -115,13 +114,17 @@ foreach ($items as $index => $item) {
         targets: 2,
         render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
       }],
+      order: [
+        [3, 'asc']
+      ],
     });
   });
 
-  function confirm_modal(namaBarang)
-    {
-      $('#namaBarang').text(namaBarang)
-    }
+  function confirm_modal(namaBarang, userId) {
+    $('#namaBarang').text(namaBarang)
+    $('#formId').attr('action', `http://pbw-2.test/admin/item/${userId}`);
+    
+  }
 </script>
 <?= $this->endSection(); ?>
 

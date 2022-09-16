@@ -190,7 +190,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var int
 	 */
-	public $rememberLength = 4 * HOUR;
+	public $rememberLength = 18 * HOUR;
 
 	/**
 	 * --------------------------------------------------------------------
@@ -201,7 +201,7 @@ class Auth extends BaseConfig
 	 *
 	 * @var bool
 	 */
-	public $silent = false;
+	public $silent = true;
 
 	/**
 	 * --------------------------------------------------------------------

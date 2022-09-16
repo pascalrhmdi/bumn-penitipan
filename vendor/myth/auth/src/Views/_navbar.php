@@ -63,7 +63,7 @@
                         <span class="mt-1 ms-2 sidebar-text ">SIPIRANG</span>
                     </a>
                 </li>
-                <li class="nav-item <?= url_is('admin') ? 'active': '' ?>">
+                <li class="nav-item <?= url_is('admin') ? 'active' : '' ?>">
                     <a href="<?= site_url(); ?>" class="nav-link">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -74,21 +74,20 @@
                         <span class="sidebar-text">Dasbor</span>
                     </a>
                 </li>
-                <!-- User -->
-                <!-- <li class="nav-item ">
-                    <a href="<?= route_to('admin/user'); ?>" class="nav-link">
+                <?php if (in_groups("superadmin")) : ?>
+                <li class="nav-item <?= url_is('admin/user') ? 'active' : '' ?>">
+                    <a href="<?= site_url("admin/user"); ?>" class="nav-link">
                         <span class="sidebar-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon icon-xs me-2" viewBox="0 0 20 20">
-                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" clip-rule="evenodd"/>
-                                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                            <svg class="icon icon-xs me-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor"viewBox="0 0 16 16">
+                                <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
                             </svg>
                         </span>
-                        <span class="sidebar-text">User</span>
+                        <span class="sidebar-text">Akun</span>
                     </a>
-                </li> -->
+                </li>
+               <?php endif ?>
                 <!-- UMKM  -->
-                <li class="nav-item <?= url_is('admin/umkm*') ? 'active': '' ?>">
+                <li class="nav-item <?= url_is('admin/umkm*') ? 'active' : '' ?>">
                     <a href="<?= route_to('admin/umkm'); ?>" class="nav-link">
                         <span class="sidebar-icon">
                             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +97,7 @@
                         <span class="sidebar-text">UMKM</span>
                     </a>
                 </li>
-                <li class="nav-item <?= url_is('admin/item*') ? 'active': '' ?>">
+                <li class="nav-item <?= url_is('admin/item*') ? 'active' : '' ?>">
                     <a href="<?= site_url("admin/item"); ?>" class="nav-link">
                         <span>
                             <span class="sidebar-icon">

@@ -62,6 +62,7 @@ $routes->group('admin', ['filter' => 'login'], static function ($routes) {
 
     $routes->resource('umkm', ['placeholder' => '(:num)']);
     $routes->resource('item', ['placeholder' => '(:num)']);
+    $routes->resource('user', ['placeholder' => '(:num)', 'except' => 'new, create', 'filter' => 'role:superadmin']);
 });
 
 /*
